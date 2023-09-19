@@ -28,7 +28,7 @@
     * Make an appointment
   * Doctor
     * See their appointments
-    * User diagnosis CRUD
+    * Patient diagnosis CRUD
     * Prescriptions CRUD
   * Admin
     * CRUD with all entities
@@ -55,7 +55,7 @@
    * last_name VARCHAR(50) NOT NULL,
    * date_of_birth DATE NOT NULL,
    * gender VARCHAR(20) NOT NULL,
-   * phone_number VARCHAR(20) ~ '\+[0-9]{6,19}' NOT NULL,
+   * phone_number CHAR(13) ~ '\+375[0-9]{9}' NOT NULL,
    * email VARCHAR(50) ~ '.*@.+\..*'
 5. `doctor`
    * id SERIAL PRIMARY KEY NOT NULL,
@@ -97,10 +97,10 @@
 13. `prescription`
     * id BIGSERIAL PRIMARY KEY NOT NULL,
     * note TEXT NOT NULL
-14. `user_diagnosis`
+14. `patient_diagnosis`
     * id BIGSERIAL PRIMARY KEY NOT NULL,
-    * FOREIGN KEY user_id REFERENCES user(id) NOT NULL,
+    * FOREIGN KEY patient_id REFERENCES user(id) NOT NULL,
     * FOREIGN KEY diagnosis_id REFERENCES diagnosis(id) NOT NULL
     * note TEXT
 
-![Entity diagram](https://github.com/dashadmdv/db-labs/assets/69718734/ecc907f3-56a4-4fcd-a74c-521a44802fbf)
+![Entity diagram](https://github.com/dashadmdv/db-labs/assets/69718734/d0c0a08f-bae7-4f47-8ae2-d6cfedd906e5)
