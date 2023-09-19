@@ -103,3 +103,4 @@
     * FOREIGN KEY diagnosis_id REFERENCES diagnosis(id) NOT NULL
     * note TEXT
 
+![Entity diagram](https://github.com/dashadmdv/db-labs/assets/69718734/85f0cfc2-b109-40ed-83a9-a7b8aa8b949e)
