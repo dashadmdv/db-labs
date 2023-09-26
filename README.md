@@ -50,16 +50,16 @@
    * role_name VARCHAR(25) UNIQUE NOT NULL
 4. `patient`
    * id BIGSERIAL PRIMARY KEY NOT NULL,
-   * FOREIGN KEY user_id REFERENCES user(id) NOT NULL,
+   * FOREIGN KEY user_id REFERENCES user(id) UNIQUE NOT NULL,
    * first_name VARCHAR(50) NOT NULL,
    * last_name VARCHAR(50) NOT NULL,
    * date_of_birth DATE NOT NULL,
    * gender VARCHAR(20) NOT NULL,
-   * phone_number CHAR(13) ~ '\+375[0-9]{9}' NOT NULL,
-   * email VARCHAR(50) ~ '.*@.+\..*'
+   * phone_number CHAR(13) ~ `'\+375[0-9]{9}'` NOT NULL,
+   * email VARCHAR(50) ~ `'.*@.+\..*'`
 5. `doctor`
    * id SERIAL PRIMARY KEY NOT NULL,
-   * FOREIGN KEY user_id REFERENCES user(id),
+   * FOREIGN KEY user_id REFERENCES user(id) UNIQUE NOT NULL,
    * first_name VARCHAR(50) NOT NULL,
    * last_name VARCHAR(50) NOT NULL,
    * gender VARCHAR(20) NOT NULL,
@@ -70,7 +70,7 @@
    * category_name VARCHAR(25) UNIQUE NOT NULL
 7. `doctor_specialization`
    * id SERIAL PRIMARY KEY NOT NULL,
-   * specialization_name VARCHAR(25) UNIQUE NOT NULL
+   * specialization_name VARCHAR(25) UNIQUE NOT NULL,
    * FOREIGN KEY category_id REFERENCES doctor_category(id) NOT NULL
 8. `department`
    * id SERIAL PRIMARY KEY NOT NULL,
@@ -83,24 +83,31 @@
    * is_taken BOOLEAN NOT NULL DEFAULT FALSE
 10. `service`
     * id SERIAL PRIMARY KEY NOT NULL,
-    * price DECIMAL(12,2) NOT NULL
+    * service_name VARCHAR(50) NOT NULL,
+    * price DECIMAL(12,2) NOT NULL,
+    * FOREIGN KEY doctor_id REFERENCES doctor(id) NOT NULL
 11. `appointment`
     * id BIGSERIAL PRIMARY KEY NOT NULL,
     * FOREIGN KEY slot_id REFERENCES schedule_slot(id) NOT NULL,
     * FOREIGN KEY patient_id REFERENCES patient(id) NOT NULL,
-    * FOREIGN KEY service_id REFERENCES service(id) NOT NULL,
     * FOREIGN KEY prescription_id REFERENCES prescription(id)
-12. `diagnosis`
+12. `appointment_service` (MTM)
+    * id BIGSERIAL PRIMARY KEY NOT NULL,
+    * FOREIGN KEY appointment_id REFERENCES appointment(id) NOT NULL,
+    * FOREIGN KEY service_id REFERENCES service(id) NOT NULL
+13. `diagnosis`
     * id SERIAL PRIMARY KEY NOT NULL,
     * diagnosis_name VARCHAR(50) NOT NULL,
-    * diagnosis_code VARCHAR(10) NOT NULL,
-13. `prescription`
+    * diagnosis_code VARCHAR(10) NOT NULL
+14. `prescription`
     * id BIGSERIAL PRIMARY KEY NOT NULL,
-    * note TEXT NOT NULL
-14. `patient_diagnosis`
+    * note TEXT NOT NULL,
+    * FOREIGN KEY appointment_id REFERENCES appointment(id) NOT NULL
+15. `patient_diagnosis` (MTM)
     * id BIGSERIAL PRIMARY KEY NOT NULL,
-    * FOREIGN KEY patient_id REFERENCES user(id) NOT NULL,
-    * FOREIGN KEY diagnosis_id REFERENCES diagnosis(id) NOT NULL
+    * FOREIGN KEY patient_id REFERENCES patient(id) NOT NULL,
+    * FOREIGN KEY diagnosis_id REFERENCES diagnosis(id) NOT NULL,
+    * date_of_diagnosis DATE NOT NULL,
     * note TEXT
 
-![Entity diagram](https://github.com/dashadmdv/db-labs/assets/69718734/d0c0a08f-bae7-4f47-8ae2-d6cfedd906e5)
+![Entity diagram](https://github.com/dashadmdv/db-labs/assets/69718734/2390f553-ba61-426a-9a00-a8ba8288ace4)
