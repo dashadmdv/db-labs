@@ -18,13 +18,6 @@ VALUES ('admin', 'admin', 1),
        ('cgurton13', 'eM3)gzm#<R''EO#5', 3),
        ('aiacovides14', 'mS4?KAf>GB_"', 2);
 
-INSERT INTO user_activity (user_id, activity_type)
-VALUES (1, 'Registration'), (2, 'Registration'), (3, 'Registration'),
-       (4, 'Registration'), (5, 'Registration'), (6, 'Registration'),
-       (7, 'Registration'), (8, 'Registration'), (9, 'Registration'),
-       (10, 'Registration'), (11, 'Registration'), (12, 'Registration'),
-       (13, 'Registration');
-
 INSERT INTO patient (user_id, first_name, last_name, date_of_birth, gender, phone_number, email)
 VALUES (3, 'Ivan', 'Ivanov', '1970-01-01', 'Male', '+375291111111', 'aboba@gmail.com'),
        (6, 'Anna', 'Annova', '1980-01-01', 'Female', '+375292222222', 'aboba1@gmail.com'),
