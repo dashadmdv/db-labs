@@ -26,12 +26,12 @@ VALUES (1, 'Registration'), (2, 'Registration'), (3, 'Registration'),
        (13, 'Registration');
 
 INSERT INTO patient (user_id, first_name, last_name, date_of_birth, gender, phone_number, email)
-VALUES (3, 'Ivan', 'Ivanov', '2000-01-01', 'Male', '+375291111111', 'aboba@gmail.com'),
-       (6, 'Anna', 'Annova', '2001-01-01', 'Female', '+375292222222', 'aboba1@gmail.com'),
-       (8, 'Petr', 'Petrov', '2002-01-01', 'Male', '+375293333333', 'aboba2@gmail.com'),
-       (10, 'Anastasia', 'Anastasieva', '2003-01-01', 'Female', '+375294444444', 'aboba3@gmail.com'),
-       (11, 'Oleg', 'Olegov', '2004-01-01', 'Male', '+375295555555', 'aboba4@gmail.com'),
-       (13, 'Olga', 'Olgova', '2005-01-01', 'Female', '+375296666666', 'aboba5@gmail.com');
+VALUES (3, 'Ivan', 'Ivanov', '1970-01-01', 'Male', '+375291111111', 'aboba@gmail.com'),
+       (6, 'Anna', 'Annova', '1980-01-01', 'Female', '+375292222222', 'aboba1@gmail.com'),
+       (8, 'Petr', 'Petrov', '1990-01-01', 'Male', '+375293333333', 'aboba2@gmail.com'),
+       (10, 'Anastasia', 'Anastasieva', '2000-01-01', 'Female', '+375294444444', 'aboba3@gmail.com'),
+       (11, 'Oleg', 'Olegov', '2010-01-01', 'Male', '+375295555555', 'aboba4@gmail.com'),
+       (13, 'Olga', 'Olgova', '2020-01-01', 'Female', '+375296666666', 'aboba5@gmail.com');
 
 INSERT INTO doctor_category (category_name)
 VALUES ('Pediatrician'),
