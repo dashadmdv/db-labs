@@ -93,7 +93,7 @@ GROUP BY age_group
 ORDER BY age_group;
 
 --put together info about doctors' specializations and their services
---EXPLAIN ANALYZE
+EXPLAIN ANALYZE
 SELECT
     d.first_name || ' ' || d.last_name AS doctor_name,
     ds.specialization_name,
