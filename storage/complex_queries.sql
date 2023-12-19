@@ -8,7 +8,7 @@ FROM doctor;
 --total cash by doctor
 SELECT
     d.first_name,
-    d.last_name,
+    d.last_name, 
     COALESCE(SUM(ser.price), 0) AS total_revenue
 FROM doctor d
 LEFT JOIN schedule_slot s ON d.id = s.doctor_id
