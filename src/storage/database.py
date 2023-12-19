@@ -61,6 +61,14 @@ class Database:
         self.execute(sql)
         return self.fetchone()
 
+    def get_usernames(self):
+        return self.query(f"SELECT username FROM user_acc;")
+
+    def get_user_by_username(self, username):
+        sql = f"SELECT id FROM user_acc WHERE username = '{username}';"
+        self.execute(sql)
+        return self.fetchone()
+
     # CREATE
 
     def create_role(self, name):
@@ -152,6 +160,18 @@ class Database:
             sql = f"""
                         INSERT INTO doctor (user_id, first_name, last_name, gender, specialization_id, department_id)
                         VALUES ({user_id}, '{first_name}', '{last_name}', '{gender}', {specialization_id}, {department_id});
+                    """
+            self.execute(sql)
+            return "Doctor added!"
+        except Exception as e:
+            self.execute("ROLLBACK")
+            return e
+
+    def create_doctor_min(self, user_id, first_name, last_name, gender):
+        try:
+            sql = f"""
+                        INSERT INTO doctor (user_id, first_name, last_name, gender)
+                        VALUES ({user_id}, '{first_name}', '{last_name}', '{gender}');
                     """
             self.execute(sql)
             return "Doctor added!"

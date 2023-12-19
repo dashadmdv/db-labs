@@ -22,6 +22,16 @@ class CLIController:
     def get_item_by_id(self, item_id, name):
         return [self.db.select_by_id(item_id, name)]
 
+    def get_usernames(self):
+        users = self.db.get_usernames()
+        result = []
+        for user in users:
+            result.extend(user)
+        return result
+
+    def get_user_by_username(self, username):
+        return self.db.get_user_by_username(username)
+
     def create_role(self, name):
         return self.db.create_role(name)
 
@@ -45,6 +55,9 @@ class CLIController:
 
     def create_doctor(self, user_id, first_name, last_name, gender, specialization_id, department_id):
         return self.db.create_doctor(user_id, first_name, last_name, gender, specialization_id, department_id)
+
+    def create_doctor_min(self, user_id, first_name, last_name, gender):
+        return self.db.create_doctor_min(user_id, first_name, last_name, gender)
 
     def create_slot(self, date_of_slot, time_of_slot, doctor_id):
         return self.db.create_slot(date_of_slot, time_of_slot, doctor_id)
