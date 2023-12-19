@@ -1,1 +1,0 @@
-CREATE DATABASE med_center;
