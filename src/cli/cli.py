@@ -2,6 +2,7 @@ from prettytable import PrettyTable
 from src.controller.cli_controller import CLIController
 from .admin_dialogue import AdminCLI
 from .doctor_dialogue import DoctorCLI
+from .patient_dialogue import PatientCLI
 
 class CLI:
     def __init__(self):
@@ -146,7 +147,10 @@ class CLI:
                         admin_dialogue.run()
                         continue
                     elif self.current_user_role == 2:
-                        pass
+                        pat_id = self.controller.get_patient_by_user_id(self.current_user_id)
+                        patient_dialogue = PatientCLI(self.controller, pat_id)
+                        patient_dialogue.run()
+                        continue
                     elif self.current_user_role == 3:
                         doc_id = self.controller.get_doctor_by_user_id(self.current_user_id)
                         doctor_dialogue = DoctorCLI(self.controller, doc_id)

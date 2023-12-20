@@ -78,6 +78,11 @@ class Database:
         self.execute(sql)
         return self.fetchone()
 
+    def get_patient_by_user_id(self, user_id):
+        sql = f"SELECT id FROM patient WHERE user_id = '{user_id}';"
+        self.execute(sql)
+        return self.fetchone()
+
     def get_doctor_appointments(self, doctor_id):
         date = datetime.today().strftime('%Y-%m-%d')
         return self.query(f"select appointment_id from appointment_service "
@@ -86,9 +91,13 @@ class Database:
                           f"join schedule_slot on appointment.slot_id=schedule_slot.id "
                           f"where service.doctor_id={doctor_id} and date_of_slot='{date}' and is_taken=true;")
 
+    def get_patient_appointments(self, pat_id):
+        date = datetime.today().strftime('%Y-%m-%d')
+        return self.query(f"select id from appointment where patient_id={pat_id};")
+
     def get_doctor_app_info(self, app_id):
         sql = (f"select appointment_id, service_name, patient.first_name || ' ' || patient.last_name as patient, "
-               f"doctor.first_name || ' ' || doctor.last_name as doctor, date_of_slot, time_of_slot from appointment_service "
+               f"doctor.first_name || ' ' || doctor.last_name as doctor, date_of_slot, time_of_slot, price from appointment_service "
                f"join service on appointment_service.service_id=service.id "
                f"join appointment on appointment_service.appointment_id=appointment.id "
                f"join schedule_slot on appointment.slot_id=schedule_slot.id "
@@ -99,6 +108,42 @@ class Database:
 
     def get_patient_by_app(self, app_id):
         sql = (f"select patient_id from appointment where id={app_id};")
+        self.execute(sql)
+        return self.fetchone()
+
+    def get_patient_diagnoses(self, pat_id):
+        sql = (f"select date_of_diagnosis, diagnosis_name, diagnosis_code from patient_diagnosis "
+               f"join diagnosis on patient_diagnosis.diagnosis_id=diagnosis.id where patient_id={pat_id};")
+        return self.query(sql)
+
+    def get_patient_prescription(self, pat_id):
+        sql = (f"select note, date_of_slot, first_name || ' ' || last_name as doctor from prescription "
+               f"join appointment on prescription.appointment_id=appointment.id "
+               f"join schedule_slot on appointment.slot_id=schedule_slot.id "
+               f"join doctor on schedule_slot.doctor_id=doctor.id where patient_id={pat_id};")
+        return self.query(sql)
+
+    def get_app_slots(self):
+        sql = (f"select schedule_slot.id, date_of_slot, time_of_slot, first_name || ' ' || last_name as doctor from schedule_slot "
+               f"join doctor on schedule_slot.doctor_id=doctor.id where is_taken=false;")
+        return self.query(sql)
+
+    def get_app_slots_ids(self):
+        sql = (f"select schedule_slot.id from schedule_slot "
+               f"join doctor on schedule_slot.doctor_id=doctor.id where is_taken=false;")
+        return self.query(sql)
+
+    def get_doctor_services(self, doc_id):
+        return self.query(f"select id, service_name, price from service where doctor_id={doc_id};")
+
+    def get_app_from_slot(self, slot_id):
+        sql = (f"select id from appointment where slot_id={slot_id};")
+        self.execute(sql)
+        return self.fetchone()
+
+    def get_doctor_from_slot(self, slot_id):
+        sql = (f"select doctor.id from schedule_slot "
+               f"join doctor on schedule_slot.doctor_id=doctor.id where schedule_slot.id={slot_id};")
         self.execute(sql)
         return self.fetchone()
 

@@ -69,11 +69,10 @@ class DoctorCLI:
                 break
             elif op_choice == 1:
                 info = self.controller.get_doctor_app_info(self.current_appointment)
-                name = ['appointment_id', 'service', 'patient', 'doctor', 'date', 'time']
+                name = ['appointment_id', 'service', 'patient', 'doctor', 'date', 'time', 'price']
                 self.print_table(name, [info])
             elif op_choice == 2:
                 patient_id = self.current_patient
-                print(patient_id)
                 self.print_table('diagnosis', self.controller.get_table('diagnosis'))
                 diagnosis_ids = self.controller.get_ids('diagnosis')
                 diagnosis_id = int(self.input_with_check("Input diagnosis id: ", [str(x) for x in diagnosis_ids]))

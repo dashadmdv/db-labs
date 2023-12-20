@@ -42,6 +42,9 @@ class CLIController:
     def get_doctor_by_user_id(self, user_id):
         return self.db.get_doctor_by_user_id(user_id)[0]
 
+    def get_patient_by_user_id(self, user_id):
+        return self.db.get_patient_by_user_id(user_id)[0]
+
     def get_patient_by_app(self, app_id):
         return self.db.get_patient_by_app(app_id)[0]
 
@@ -52,8 +55,40 @@ class CLIController:
             result.extend(id_)
         return result
 
+    def get_patient_appointments(self, pat_id):
+        ids = self.db.get_patient_appointments(pat_id)
+        result = []
+        for id_ in ids:
+            result.extend(id_)
+        return result
+
+    def get_patient_diagnoses(self, pat_id):
+        return self.db.get_patient_diagnoses(pat_id)
+
+    def get_patient_prescription(self, pat_id):
+        return self.db.get_patient_prescription(pat_id)
+
     def get_doctor_app_info(self, app_id):
         return self.db.get_doctor_app_info(app_id)
+
+    def get_app_slots(self):
+        return self.db.get_app_slots()
+
+    def get_app_slots_ids(self):
+        ids = self.db.get_app_slots_ids()
+        result = []
+        for id_ in ids:
+            result.extend(id_)
+        return result
+
+    def get_doctor_services(self, doc_id):
+        return self.db.get_doctor_services(doc_id)
+
+    def get_app_from_slot(self, slot_id):
+        return self.db.get_app_from_slot(slot_id)[0]
+
+    def get_doctor_from_slot(self, slot_id):
+        return self.db.get_doctor_from_slot(slot_id)[0]
 
     def create_role(self, name):
         return self.db.create_role(name)
