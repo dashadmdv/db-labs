@@ -17,6 +17,7 @@ class DoctorCLI:
         self.fields = [["Role name"], ["Username", "Password", "Role id"], ["User id", "Activity", "Date", "Time"],
                        ["User id", "First name", "Last name", "Date of birth", "Gender", "Phone", "Email"],
                        ["Category name"], ["Specialization name", "Category id"], ["Department name"],
+                       ["User id", "First name", "Last name", "Gender", "Specialization id", "Department id"],
                        ["Date", "Time", "Doctor id"], ["Service name", "Price", "Doctor id"], ["Slot id", "Patient_id"],
                        ["Appointment id", "Service id"], ["Diagnosis name", "Diagnosis code"],
                        ["Note", "Appointment id"], ["Patient id", "Diagnosis id"]]
@@ -51,7 +52,7 @@ class DoctorCLI:
                 info = []
                 for id in app_ids:
                     info.append(self.controller.get_doctor_app_info(id))
-                name = ['appointment_id', 'service', 'patient', 'doctor', 'date', 'time']
+                name = ['id', 'appointment_id', 'service', 'patient', 'doctor', 'date', 'time']
                 self.print_table(name, info)
             elif op_choice == 2:
                 app_ids = self.controller.get_doctor_appointments(self.doctor_id)

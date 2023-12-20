@@ -3,33 +3,23 @@
 
 ## Functional requirements
 * User authorization
-* User management (CRUD)
+* Work with entities (CRUD)
 * The role system (roles: PATIENT, DOCTOR, ADMIN)
 * Logging user actions
-* Departments CRUD (ADMIN)
-* Doctor categories&specializations CRUD (ADMIN)
-* Schedule CRUD (ADMIN)
-* Services CRUD (ADMIN)
-* Appointments CRUD (PATIENT, DOCTOR)
-* Diagnoses CRUD (DOCTOR)
-* Prescriptions CRUD (DOCTOR)
 
 ## Use cases
 * Non-authorized user
-  * See doctors list
-  * See doctor's services list
-  * See appointments schedule
   * Authorize
+  * Registration
 * Authorized user
   * Patient
-    * See doctors list
-    * See doctor's services list
-    * See appointments schedule
     * Make an appointment
+    * See their appointments
+    * See their diagnoses
   * Doctor
     * See their appointments
-    * Patient diagnosis CRUD
-    * Prescriptions CRUD
+    * Create patient diagnosis
+    * Create prescriptions
   * Admin
     * CRUD with all entities
 

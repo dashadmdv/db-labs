@@ -15,6 +15,7 @@ class PatientCLI:
         self.fields = [["Role name"], ["Username", "Password", "Role id"], ["User id", "Activity", "Date", "Time"],
                        ["User id", "First name", "Last name", "Date of birth", "Gender", "Phone", "Email"],
                        ["Category name"], ["Specialization name", "Category id"], ["Department name"],
+                       ["User id", "First name", "Last name", "Gender", "Specialization id", "Department id"],
                        ["Date", "Time", "Doctor id"], ["Service name", "Price", "Doctor id"], ["Slot id", "Patient_id"],
                        ["Appointment id", "Service id"], ["Diagnosis name", "Diagnosis code"],
                        ["Note", "Appointment id"], ["Patient id", "Diagnosis id"]]
@@ -66,7 +67,7 @@ class PatientCLI:
                     return
                 info = self.controller.get_doctor_services(self.controller.get_doctor_from_slot(slots_id))
                 print(info)
-                self.print_table('service', info)
+                self.print_table(["Service id", "Service name", "Price"], info)
                 service_ids = self.controller.get_ids('service')
                 service_id = int(self.input_with_check("Select service (by id): ", [str(x) for x in service_ids]))
                 if service_id == 0:
