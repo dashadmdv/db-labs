@@ -39,6 +39,22 @@ class CLIController:
             result.extend(id_)
         return result
 
+    def get_doctor_by_user_id(self, user_id):
+        return self.db.get_doctor_by_user_id(user_id)[0]
+
+    def get_patient_by_app(self, app_id):
+        return self.db.get_patient_by_app(app_id)[0]
+
+    def get_doctor_appointments(self, doc_id):
+        ids = self.db.get_doctor_appointments(doc_id)
+        result = []
+        for id_ in ids:
+            result.extend(id_)
+        return result
+
+    def get_doctor_app_info(self, app_id):
+        return self.db.get_doctor_app_info(app_id)
+
     def create_role(self, name):
         return self.db.create_role(name)
 

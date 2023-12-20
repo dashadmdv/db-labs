@@ -4,6 +4,7 @@ import src.storage.create_database as db
 from src.config import (
     DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT
 )
+from datetime import datetime
 
 db_config = {
     'host': DB_HOST,
@@ -71,6 +72,35 @@ class Database:
 
     def get_ids(self, name):
         return self.query(f"SELECT id FROM {name};")
+
+    def get_doctor_by_user_id(self, user_id):
+        sql = f"SELECT id FROM doctor WHERE user_id = '{user_id}';"
+        self.execute(sql)
+        return self.fetchone()
+
+    def get_doctor_appointments(self, doctor_id):
+        date = datetime.today().strftime('%Y-%m-%d')
+        return self.query(f"select appointment_id from appointment_service "
+                          f"join service on appointment_service.service_id=service.id "
+                          f"join appointment on appointment_service.appointment_id=appointment.id "
+                          f"join schedule_slot on appointment.slot_id=schedule_slot.id "
+                          f"where service.doctor_id={doctor_id} and date_of_slot='{date}' and is_taken=true;")
+
+    def get_doctor_app_info(self, app_id):
+        sql = (f"select appointment_id, service_name, patient.first_name || ' ' || patient.last_name as patient, "
+               f"doctor.first_name || ' ' || doctor.last_name as doctor, date_of_slot, time_of_slot from appointment_service "
+               f"join service on appointment_service.service_id=service.id "
+               f"join appointment on appointment_service.appointment_id=appointment.id "
+               f"join schedule_slot on appointment.slot_id=schedule_slot.id "
+               f"join doctor on service.doctor_id=doctor.id "
+               f"join patient on appointment.patient_id=patient.id where appointment_id={app_id};")
+        self.execute(sql)
+        return self.fetchone()
+
+    def get_patient_by_app(self, app_id):
+        sql = (f"select patient_id from appointment where id={app_id};")
+        self.execute(sql)
+        return self.fetchone()
 
     # CREATE
 

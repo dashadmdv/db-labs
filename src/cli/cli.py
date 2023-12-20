@@ -1,6 +1,7 @@
 from prettytable import PrettyTable
 from src.controller.cli_controller import CLIController
 from .admin_dialogue import AdminCLI
+from .doctor_dialogue import DoctorCLI
 
 class CLI:
     def __init__(self):
@@ -79,7 +80,7 @@ class CLI:
         email = input("Email: ")
         user_info = self.controller.get_item_by_id(user_id, 'user_acc')[0]
         print(self.controller.create_patient(user_id, first_name, last_name, date_of_birth, gender, phone_number, email))
-        self.update_current_user(user_info[1], user_info[2], user_info[3])
+        self.update_current_user(user_info[0], user_info[1], user_info[3])
 
     def create_doctor(self, user_id):
         first_name = input("First name: ")
@@ -98,7 +99,7 @@ class CLI:
             break
         user_info = self.controller.get_item_by_id(user_id, 'user_acc')[0]
         print(self.controller.create_doctor_min(user_id, first_name, last_name, gender))
-        self.update_current_user(user_info[1], user_info[2], user_info[3])
+        self.update_current_user(user_info[0], user_info[1], user_info[3])
 
     def login(self):
         users = self.controller.get_usernames()
@@ -111,7 +112,7 @@ class CLI:
         if password != user_info[2]:
             print("Incorrect password!")
             return
-        self.update_current_user(user_info[1], user_info[2], user_info[3])
+        self.update_current_user(user_info[0], user_info[1], user_info[3])
 
     def logout(self):
         print("Bye!")
@@ -147,6 +148,9 @@ class CLI:
                     elif self.current_user_role == 2:
                         pass
                     elif self.current_user_role == 3:
-                        pass
+                        doc_id = self.controller.get_doctor_by_user_id(self.current_user_id)
+                        doctor_dialogue = DoctorCLI(self.controller, doc_id)
+                        doctor_dialogue.run()
+                        continue
                 else:
                     self.logout()
