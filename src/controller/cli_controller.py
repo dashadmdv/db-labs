@@ -32,14 +32,21 @@ class CLIController:
     def get_user_by_username(self, username):
         return self.db.get_user_by_username(username)
 
+    def get_ids(self, name):
+        ids = self.db.get_ids(name)
+        result = []
+        for id_ in ids:
+            result.extend(id_)
+        return result
+
     def create_role(self, name):
         return self.db.create_role(name)
 
     def create_user(self, username, password, role_id):
         return self.db.create_user(username, password, role_id)
 
-    def create_user_activity(self, user_id, activity_type, date_of_activity='', time_of_activity=''):
-        return self.db.create_user_activity(user_id, activity_type, date_of_activity, time_of_activity)
+    def create_user_activity(self, user_id, activity_type):
+        return self.db.create_user_activity(user_id, activity_type)
 
     def create_patient(self, user_id, first_name, last_name, date_of_birth, gender, phone_number, email=''):
         return self.db.create_patient(user_id, first_name, last_name, date_of_birth, gender, phone_number, email)

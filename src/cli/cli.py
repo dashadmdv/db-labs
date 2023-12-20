@@ -1,6 +1,6 @@
 from prettytable import PrettyTable
 from src.controller.cli_controller import CLIController
-
+from .admin_dialogue import AdminCLI
 
 class CLI:
     def __init__(self):
@@ -47,7 +47,7 @@ class CLI:
             break
         password = input("Input password: ")
         role_id = int(self.input_with_check("Are you 2 - patient or 3 - doctor? ", ['2', '3'], True))
-        self.controller.create_user(username, password, role_id)
+        print(self.controller.create_user(username, password, role_id))
         user_id = self.controller.get_user_by_username(username)[0]
         if role_id == 2:
             self.create_patient(user_id)
@@ -78,8 +78,8 @@ class CLI:
         phone_number = input("Phone number (+375xxxxxxxxxx): ")
         email = input("Email: ")
         user_info = self.controller.get_item_by_id(user_id, 'user_acc')[0]
-        self.controller.create_patient(user_id, first_name, last_name, date_of_birth, gender, phone_number, email)
-        self.update_current_user(user_info[0], user_info[1], user_info[2])
+        print(self.controller.create_patient(user_id, first_name, last_name, date_of_birth, gender, phone_number, email))
+        self.update_current_user(user_info[1], user_info[2], user_info[3])
 
     def create_doctor(self, user_id):
         first_name = input("First name: ")
@@ -97,8 +97,8 @@ class CLI:
                 continue
             break
         user_info = self.controller.get_item_by_id(user_id, 'user_acc')[0]
-        self.controller.create_doctor_min(user_id, first_name, last_name, gender)
-        self.update_current_user(user_info[0], user_info[1], user_info[2])
+        print(self.controller.create_doctor_min(user_id, first_name, last_name, gender))
+        self.update_current_user(user_info[1], user_info[2], user_info[3])
 
     def login(self):
         users = self.controller.get_usernames()
@@ -111,7 +111,7 @@ class CLI:
         if password != user_info[2]:
             print("Incorrect password!")
             return
-        self.update_current_user(user_info[0], user_info[1], user_info[2])
+        self.update_current_user(user_info[1], user_info[2], user_info[3])
 
     def logout(self):
         print("Bye!")
@@ -140,5 +140,13 @@ class CLI:
             elif choice == 2:
                 if not self.current_user_id:
                     self.login()
+                    if self.current_user_role == 1:
+                        admin_dialogue = AdminCLI(self.controller)
+                        admin_dialogue.run()
+                        continue
+                    elif self.current_user_role == 2:
+                        pass
+                    elif self.current_user_role == 3:
+                        pass
                 else:
                     self.logout()

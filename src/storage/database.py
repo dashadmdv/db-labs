@@ -69,6 +69,9 @@ class Database:
         self.execute(sql)
         return self.fetchone()
 
+    def get_ids(self, name):
+        return self.query(f"SELECT id FROM {name};")
+
     # CREATE
 
     def create_role(self, name):
@@ -95,11 +98,11 @@ class Database:
             self.execute("ROLLBACK")
             return e
 
-    def create_user_activity(self, user_id, activity_type, date_of_activity='', time_of_activity=''):
+    def create_user_activity(self, user_id, activity_type):
         try:
             sql = f"""
-                        INSERT INTO user_activity (user_id, activity_type, date_of_activity, time_of_activity)
-                        VALUES ({user_id}, '{activity_type}', '{date_of_activity}', '{time_of_activity}');
+                        INSERT INTO user_activity (user_id, activity_type)
+                        VALUES ({user_id}, '{activity_type}');
                     """
             self.execute(sql)
             return "User activity added!"
@@ -286,21 +289,20 @@ class Database:
                         WHERE id={id};
                     """
             self.execute(sql)
-            return "Role added!"
+            return "User updated!"
         except Exception as e:
             self.execute("ROLLBACK")
             return e
 
-    def update_user_activity(self, id, user_id, activity_type, date_of_activity='', time_of_activity=''):
+    def update_user_activity(self, id, user_id, activity_type):
         try:
             sql = f"""
                         UPDATE user_activity 
-                        SET user_id={user_id}, activity_type='{activity_type}', date_of_activity='{date_of_activity}', 
-                        time_of_activity='{time_of_activity}'
+                        SET user_id={user_id}, activity_type='{activity_type}'
                         WHERE id={id};
                     """
             self.execute(sql)
-            return "User activity added!"
+            return "User activity updated!"
         except Exception as e:
             self.execute("ROLLBACK")
             return e
@@ -314,7 +316,7 @@ class Database:
                         WHERE id={id};
                     """
             self.execute(sql)
-            return "Patient added!"
+            return "Patient updated!"
         except Exception as e:
             self.execute("ROLLBACK")
             return e
@@ -327,7 +329,7 @@ class Database:
                         WHERE id={id};
                     """
             self.execute(sql)
-            return "Doctor category added!"
+            return "Doctor category updated!"
         except Exception as e:
             self.execute("ROLLBACK")
             return e
@@ -340,7 +342,7 @@ class Database:
                         WHERE id={id};
                     """
             self.execute(sql)
-            return "Doctor specialization added!"
+            return "Doctor specialization updated!"
         except Exception as e:
             self.execute("ROLLBACK")
             return e
@@ -353,7 +355,7 @@ class Database:
                         WHERE id={id};
                     """
             self.execute(sql)
-            return "Department added!"
+            return "Department updated!"
         except Exception as e:
             self.execute("ROLLBACK")
             return e
@@ -367,7 +369,7 @@ class Database:
                         WHERE id={id};
                     """
             self.execute(sql)
-            return "Doctor added!"
+            return "Doctor updated!"
         except Exception as e:
             self.execute("ROLLBACK")
             return e
@@ -380,7 +382,7 @@ class Database:
                         WHERE id={id};
                     """
             self.execute(sql)
-            return "Schedule slot added!"
+            return "Schedule slot updated!"
         except Exception as e:
             self.execute("ROLLBACK")
             return e
@@ -393,7 +395,7 @@ class Database:
                         WHERE id={id};
                     """
             self.execute(sql)
-            return "Service added!"
+            return "Service updated!"
         except Exception as e:
             self.execute("ROLLBACK")
             return e
@@ -406,7 +408,7 @@ class Database:
                         WHERE id={id};
                     """
             self.execute(sql)
-            return "Appointment added!"
+            return "Appointment updated!"
         except Exception as e:
             self.execute("ROLLBACK")
             return e
@@ -419,7 +421,7 @@ class Database:
                         WHERE id={id};
                     """
             self.execute(sql)
-            return "Service added to appointment!"
+            return "Service updated!"
         except Exception as e:
             self.execute("ROLLBACK")
             return e
@@ -432,7 +434,7 @@ class Database:
                         WHERE id={id};
                     """
             self.execute(sql)
-            return "Diagnosis added!"
+            return "Diagnosis updated!"
         except Exception as e:
             self.execute("ROLLBACK")
             return e
@@ -445,7 +447,7 @@ class Database:
                         WHERE id={id};
                     """
             self.execute(sql)
-            return "Prescription added!"
+            return "Prescription updated!"
         except Exception as e:
             self.execute("ROLLBACK")
             return e
@@ -458,7 +460,7 @@ class Database:
                         WHERE id={id};
                     """
             self.execute(sql)
-            return "Diagnosis added to patient!"
+            return "Diagnosis updated!"
         except Exception as e:
             self.execute("ROLLBACK")
             return e
